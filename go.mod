@@ -1,6 +1,6 @@
-module github.com/Alksndr9/jobhub-service-template
+module github.com/job-hub-kai/jobhub-auth
 
-go 1.26.1
+go 1.24.7
 
 require (
 	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.3.3

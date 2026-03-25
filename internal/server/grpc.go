@@ -5,8 +5,8 @@ import (
 	"net"
 	"net/http"
 
-	"github.com/Alksndr9/jobhub-service-template/internal/config"
-	"github.com/Alksndr9/jobhub-service-template/internal/health"
+	"github.com/job-hub-kai/jobhub-auth/internal/config"
+	"github.com/job-hub-kai/jobhub-auth/internal/health"
 	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/logging"
 	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/recovery"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
