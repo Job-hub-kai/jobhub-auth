@@ -47,7 +47,7 @@ require (
 	golang.org/x/sys v0.39.0 // indirect
 	golang.org/x/text v0.32.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20251202230838-ff82c1b0f217 // indirect
-	google.golang.org/protobuf v1.36.10 // indirect
+	google.golang.org/protobuf v1.36.11 // indirect
 )
 
-replace github.com/Alksndr9/jobhub-proto => ../jobhub-proto
+replace github.com/Alksndr9/jobhub-proto v0.0.0-00010101000000-000000000000 => github.com/Job-hub-kai/jobhub-proto v0.0.0-20260325053016-6ae542181041
