@@ -9,8 +9,22 @@ import (
 	"github.com/google/uuid"
 	"github.com/job-hub-kai/jobhub-auth/internal/config"
 	"github.com/job-hub-kai/jobhub-auth/internal/domain"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promauto"
 	"go.uber.org/zap"
 	"golang.org/x/crypto/bcrypt"
+)
+
+var (
+	registerTotal = promauto.NewCounterVec(prometheus.CounterOpts{
+		Name: "auth_register_total",
+		Help: "Total number of registration attempts",
+	}, []string{"status"})
+
+	loginTotal = promauto.NewCounterVec(prometheus.CounterOpts{
+		Name: "auth_login_total",
+		Help: "Total number of login attempts",
+	}, []string{"status"})
 )
 
 type UserRepository interface {
@@ -58,15 +72,18 @@ func NewAuthService(users UserRepository, tokens TokenRepository, cfg config.JWT
 func (s *AuthService) Register(ctx context.Context, input domain.RegisterInput) (string, error) {
 	_, err := s.users.GetByEmail(ctx, input.Email)
 	if err == nil {
+		registerTotal.WithLabelValues("failure").Inc()
 		return "", domain.ErrUserAlreadyExists
 	}
 	if !errors.Is(err, domain.ErrUserNotFound) {
+		registerTotal.WithLabelValues("failure").Inc()
 		s.log.Error("register: get by email", zap.Error(err))
 		return "", err
 	}
 
 	hash, err := bcrypt.GenerateFromPassword([]byte(input.Password), 12)
 	if err != nil {
+		registerTotal.WithLabelValues("failure").Inc()
 		s.log.Error("register: bcrypt", zap.Error(err))
 		return "", err
 	}
@@ -82,16 +99,19 @@ func (s *AuthService) Register(ctx context.Context, input domain.RegisterInput) 
 	}
 
 	if err := s.users.Create(ctx, user); err != nil {
+		registerTotal.WithLabelValues("failure").Inc()
 		s.log.Error("register: create user", zap.Error(err))
 		return "", err
 	}
 
+	registerTotal.WithLabelValues("success").Inc()
 	return user.ID, nil
 }
 
 func (s *AuthService) Login(ctx context.Context, input domain.LoginInput) (*domain.TokenPair, error) {
 	user, err := s.users.GetByEmail(ctx, input.Email)
 	if err != nil {
+		loginTotal.WithLabelValues("failure").Inc()
 		if errors.Is(err, domain.ErrUserNotFound) {
 			return nil, domain.ErrUserNotFound
 		}
@@ -100,20 +120,24 @@ func (s *AuthService) Login(ctx context.Context, input domain.LoginInput) (*doma
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(input.Password)); err != nil {
+		loginTotal.WithLabelValues("failure").Inc()
 		return nil, domain.ErrInvalidPassword
 	}
 
 	pair, err := s.generateTokenPair(user.ID, user.Email)
 	if err != nil {
+		loginTotal.WithLabelValues("failure").Inc()
 		s.log.Error("login: generate tokens", zap.Error(err))
 		return nil, err
 	}
 
 	if err := s.saveRefreshToken(ctx, user.ID, pair.RefreshToken); err != nil {
+		loginTotal.WithLabelValues("failure").Inc()
 		s.log.Error("login: save refresh token", zap.Error(err))
 		return nil, err
 	}
 
+	loginTotal.WithLabelValues("success").Inc()
 	return pair, nil
 }
 
