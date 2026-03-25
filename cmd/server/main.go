@@ -5,9 +5,9 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/Alksndr9/jobhub-service-template/internal/config"
-	"github.com/Alksndr9/jobhub-service-template/internal/logger"
-	"github.com/Alksndr9/jobhub-service-template/internal/server"
+	"github.com/job-hub-kai/jobhub-auth/internal/config"
+	"github.com/job-hub-kai/jobhub-auth/internal/logger"
+	"github.com/job-hub-kai/jobhub-auth/internal/server"
 	"go.uber.org/zap"
 )
 
