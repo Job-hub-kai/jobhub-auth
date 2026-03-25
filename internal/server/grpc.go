@@ -5,12 +5,12 @@ import (
 	"net"
 	"net/http"
 
-	"github.com/job-hub-kai/jobhub-auth/internal/config"
-	"github.com/job-hub-kai/jobhub-auth/internal/health"
 	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/logging"
 	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/recovery"
+	"github.com/job-hub-kai/jobhub-auth/internal/config"
+	"github.com/job-hub-kai/jobhub-auth/internal/health"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-
+	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -33,6 +33,7 @@ func New(cfg *config.Config, log *zap.Logger, register func(*grpc.Server)) *Serv
 	}
 
 	grpcServer := grpc.NewServer(
+		grpc.StatsHandler(otelgrpc.NewServerHandler()),
 		grpc.ChainUnaryInterceptor(
 			logging.UnaryServerInterceptor(interceptorLogger(log)),
 			recovery.UnaryServerInterceptor(recoveryOpts...),

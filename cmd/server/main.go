@@ -16,6 +16,7 @@ import (
 	redisRepo "github.com/job-hub-kai/jobhub-auth/internal/repository/redis"
 	"github.com/job-hub-kai/jobhub-auth/internal/server"
 	"github.com/job-hub-kai/jobhub-auth/internal/service"
+	"github.com/job-hub-kai/jobhub-auth/internal/telemetry"
 	"github.com/pressly/goose/v3"
 	"github.com/redis/go-redis/v9"
 	"go.uber.org/zap"
@@ -36,6 +37,17 @@ func main() {
 
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
+
+	// Telemetry (OpenTelemetry + Jaeger)
+	shutdownTracer, err := telemetry.Init(cfg.ServiceName, cfg.Telemetry.JaegerEndpoint)
+	if err != nil {
+		log.Fatal("failed to init tracer", zap.Error(err))
+	}
+	defer func() {
+		if err := shutdownTracer(context.Background()); err != nil {
+			log.Error("tracer shutdown error", zap.Error(err))
+		}
+	}()
 
 	// PostgreSQL
 	pool, err := pgxpool.New(ctx, cfg.DB.DSN)
