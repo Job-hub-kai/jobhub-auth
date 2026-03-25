@@ -24,7 +24,7 @@ type Server struct {
 	grpc *grpc.Server
 }
 
-func New(cfg *config.Config, log *zap.Logger) *Server {
+func New(cfg *config.Config, log *zap.Logger, register func(*grpc.Server)) *Server {
 	recoveryOpts := []recovery.Option{
 		recovery.WithRecoveryHandler(func(p any) (err error) {
 			log.Error("recovered from panic", zap.Any("panic", p))
@@ -43,6 +43,7 @@ func New(cfg *config.Config, log *zap.Logger) *Server {
 		),
 	)
 
+	register(grpcServer)
 	reflection.Register(grpcServer)
 
 	return &Server{cfg: cfg, log: log, grpc: grpcServer}
