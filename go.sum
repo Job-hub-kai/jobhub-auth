@@ -1,5 +1,5 @@
-github.com/Job-hub-kai/jobhub-proto v0.0.0-20260325053016-6ae542181041 h1:8WiJMdsMcH1ixqGqHNdGE3NwlG0yR6lI36i27sMgshU=
-github.com/Job-hub-kai/jobhub-proto v0.0.0-20260325053016-6ae542181041/go.mod h1:z9Zxn33m7lHpwXbhJgp691JhrJgT/+n5dTbHGoOieRU=
+github.com/Job-hub-kai/jobhub-proto v0.0.0-20260326083555-822fa619a6dc h1:qLU3/lVP/TNH8IRqBVsJbEuBCj/sOtTT+NRvF91oxyc=
+github.com/Job-hub-kai/jobhub-proto v0.0.0-20260326083555-822fa619a6dc/go.mod h1:9oQaUYsdWwAU7WZYtMK6SKSEm7tXCN8oVAjCbAwqJOw=
 github.com/beorn7/perks v1.0.1 h1:VlbKKnNfV8bJzeqoa4cOKqO6bYr3WgKZxO8Z16+hsOM=
 github.com/beorn7/perks v1.0.1/go.mod h1:G2ZrVWU2WbWT9wwq4/hrbKbnv/1ERSJQ0ibhJ6rlkpw=
 github.com/bsm/ginkgo/v2 v2.12.0 h1:Ny8MWAHyOepLGlLKYmXG4IEkioBysk6GpaRTLC8zwWs=
@@ -47,6 +47,7 @@ github.com/jackc/pgx/v5 v5.7.5/go.mod h1:aruU7o91Tc2q2cFp5h4uP3f6ztExVpyVv88Xl/8
 github.com/jackc/puddle/v2 v2.2.2 h1:PR8nw+E/1w0GLuRFSmiioY6UooMp6KJv0/61nB7icHo=
 github.com/jackc/puddle/v2 v2.2.2/go.mod h1:vriiEXHvEE654aYKXXjOvZM39qJ0q+azkZFrfEOc3H4=
 github.com/klauspost/compress v1.18.0 h1:c/Cqfb0r+Yi+JtIEq73FWXVkRonBlf0CRNYc8Zttxdo=
+github.com/klauspost/compress v1.18.0/go.mod h1:2Pp+KzxcywXVXMr50+X0Q/Lsb43OQHYWRCY2AiWywWQ=
 github.com/kr/pretty v0.3.1 h1:flRD4NNwYAUpkphVc1HcthR4KEIFJ65n8Mw5qdRn3LE=
 github.com/kr/pretty v0.3.1/go.mod h1:hoEshYVHaxMs3cyo3Yncou5ZscifuDolrwPKZanG3xk=
 github.com/kr/text v0.2.0 h1:5Nx0Ya0ZqY2ygV366QzturHI13Jq95ApcVaJBhpS+AY=

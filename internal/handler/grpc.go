@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 
-	authpb "github.com/Alksndr9/jobhub-proto/gen/go/auth"
+	authpb "github.com/Job-hub-kai/jobhub-proto/gen/go/auth"
 	"github.com/job-hub-kai/jobhub-auth/internal/domain"
 	"github.com/job-hub-kai/jobhub-auth/internal/service"
 	"go.uber.org/zap"
@@ -74,6 +74,18 @@ func (h *GRPCHandler) ValidateToken(ctx context.Context, req *authpb.ValidateTok
 	return &authpb.ValidateTokenResponse{
 		UserId: userID,
 		Email:  email,
+	}, nil
+}
+
+func (h *GRPCHandler) GetUser(ctx context.Context, req *authpb.GetUserRequest) (*authpb.GetUserResponse, error) {
+	user, err := h.svc.GetUser(ctx, req.GetUserId())
+	if err != nil {
+		return nil, toGRPCError(err)
+	}
+	return &authpb.GetUserResponse{
+		UserId: user.ID,
+		Email:  user.Email,
+		Name:   user.Name,
 	}, nil
 }
 

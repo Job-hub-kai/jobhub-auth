@@ -204,6 +204,14 @@ func (s *AuthService) RefreshToken(ctx context.Context, refreshToken string) (*d
 	return pair, nil
 }
 
+func (s *AuthService) GetUser(ctx context.Context, userID string) (*domain.User, error) {
+	user, err := s.users.GetByID(ctx, userID)
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}
+
 func (s *AuthService) ValidateToken(ctx context.Context, accessToken string) (string, string, error) {
 	claims, err := s.parseAccessToken(accessToken)
 	if err != nil {
