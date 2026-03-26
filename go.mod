@@ -3,7 +3,7 @@ module github.com/job-hub-kai/jobhub-auth
 go 1.24.7
 
 require (
-	github.com/Alksndr9/jobhub-proto v0.0.0-00010101000000-000000000000
+	github.com/Job-hub-kai/jobhub-proto v0.0.0-20260326083555-822fa619a6dc
 	github.com/golang-jwt/jwt/v5 v5.3.1
 	github.com/google/uuid v1.6.0
 	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.3.3
@@ -63,5 +63,3 @@ require (
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20251202230838-ff82c1b0f217 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
 )
-
-replace github.com/Alksndr9/jobhub-proto v0.0.0-00010101000000-000000000000 => github.com/Job-hub-kai/jobhub-proto v0.0.0-20260325053016-6ae542181041

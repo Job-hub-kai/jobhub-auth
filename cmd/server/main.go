@@ -6,7 +6,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	authpb "github.com/Alksndr9/jobhub-proto/gen/go/auth"
+	authpb "github.com/Job-hub-kai/jobhub-proto/gen/go/auth"
 	_ "github.com/jackc/pgx/v5/stdlib"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/job-hub-kai/jobhub-auth/internal/config"
